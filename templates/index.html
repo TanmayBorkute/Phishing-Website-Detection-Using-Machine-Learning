@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PhishGuard AI – Phishing Website Detection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head><body><div id="loader"><pre id="boot"></pre></div><div class="scanlines"></div><div class="frame"></div><div id="prog"></div><div id="ret"></div>
+<nav><b class="logo"><span class="mark"></span>PHISHGUARD<em>//AI</em></b>
+<div id="links"><a href="#home">00 Home</a><a href="#about">01 About</a><a href="#dataset">02 Data</a><a href="#models">03 Models</a><a href="#predict">04 Scan</a><a href="#dashboard">05 Dash</a></div>
+<span class="sys"><i></i>SYSTEM ONLINE <time id="clk"></time></span><button id="cmdBtn" class="navbtn" title="Command palette (Ctrl+K)">Ctrl K</button><button id="sfxBtn" class="navbtn" title="Interface sounds">SFX off</button><button id="theme" class="navbtn" title="Cycle accent colour">Accent</button></nav><div id="rail"></div>
+<section id="home" class="hero">
+ <div>
+  <p class="tag">// THREAT DETECTION SYSTEM · UCI DATASET 327</p>
+  <h1 class="glitch" data-text="PHISHING WEBSITE DETECTION">PHISHING WEBSITE DETECTION</h1>
+  <p class="sub">Using Machine Learning</p>
+  <p class="type">&gt; scanning for <span id="tw"></span><u>_</u></p>
+  <p class="lead">Five classifiers trained on real phishing data judge a site as <b>LEGITIMATE</b> or <b>PHISHING</b> from 30 URL, page and domain signals, then show which signals drove the verdict.</p>
+  <a class="btn pulse" href="#predict">Detect website →</a>
+ </div>
+ <div class="radar"><div class="sweep"></div>
+  <span class="blip r" style="top:22%;left:64%" data-l="fake-login.tk"></span><span class="blip" style="top:60%;left:28%;animation-delay:1.2s" data-l="trusted.edu"></span>
+  <span class="blip r" style="top:70%;left:66%;animation-delay:2.4s" data-l="192.168.x.x/pay"></span><span class="blip" style="top:35%;left:24%;animation-delay:3.3s" data-l="bank.com"></span></div>
+ <div id="hud"></div>
+ <div class="marquee"><div>SSL ANALYSIS // URL FEATURES // 5 ML MODELS // ROC-AUC // EXPLAINABLE VERDICTS // PHISHING DETECTION // SSL ANALYSIS // URL FEATURES // 5 ML MODELS // ROC-AUC // EXPLAINABLE VERDICTS // PHISHING DETECTION //</div></div>
+ <div class="grid3 steps reveal">
+  <div class="card"><h3>01 Extract</h3><p>URL length, IP in URL, SSL state, forms, iframes, redirects and more.</p></div>
+  <div class="card"><h3>02 Classify</h3><p>The selected model scores the feature vector with P(phishing).</p></div>
+  <div class="card"><h3>03 Explain</h3><p>Each feature is flipped in turn to show what pushed the verdict.</p></div>
+ </div>
+</section>
+<section id="about"><h2>About Project</h2>
+ <div class="grid2 reveal">
+  <div class="card"><h3>Objective</h3><p>Build and compare ML classifiers that detect phishing websites from URL and website features, and expose the best one through a web application.</p>
+   <h3>Problem Statement</h3><p>Phishing sites imitate trusted brands to steal credentials. Blacklists lag behind new sites, so feature-based ML detection is needed to flag unseen threats.</p></div>
+  <div class="card"><h3>Dataset</h3><p>UCI Phishing Websites (ID 327): 30 features encoded as −1 (phishing-like), 0 (suspicious), 1 (legitimate-like); target Result.</p>
+   <h3>Technologies</h3><p>Python · Flask · Pandas · NumPy · Scikit-learn · Joblib · Chart.js · HTML/CSS/JS</p>
+   <h3>Team</h3><p>Purvanshu Dilip Mohankar (45)<br>Tanmay Janardhan Borkute (59)</p></div>
+ </div>
+ <div class="card reveal"><h3>System Architecture</h3>
+  <div class="arch"><span>UCI Dataset</span>→<span>Cleaning</span>→<span>Split/Scale</span>→<span>5 Models</span>→<span>Evaluate</span>→<span>Best Model</span>→<span>Joblib</span>→<span>Flask API</span>→<span>Web UI</span></div></div>
+ <div class="card reveal"><h3>Staying safe</h3><ul><li>Check the domain spelling before logging in.</li><li>Prefer typing known URLs over clicking email links.</li><li>A padlock only means encryption, not trustworthiness.</li><li>Enable multi-factor authentication.</li></ul></div>
+</section>
+<section id="dataset"><h2>Dataset Analysis</h2>
+ <div class="grid4" id="dsCards"></div>
+ <div class="grid2"><div class="card"><canvas id="distChart"></canvas></div>
+  <div class="card"><label>Feature value distribution <select id="featSel"></select></label><canvas id="featChart"></canvas></div></div>
+ <div class="card"><div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">Feature-space map</h3>
+  <div class="seg" id="mapTog"><button class="on" data-m="uci">UCI-327 · manual</button><button data-m="ai">PhiUSIIL · AI mode</button></div></div>
+  <canvas id="mapCv" class="mapcv"></canvas><p class="muted small" id="mapNote"></p></div>
+ <div class="card scroll"><h3>Feature statistics</h3><table id="statTbl"></table></div>
+ <div class="card scroll"><h3>Dataset preview (first 10 rows)</h3><table id="prevTbl"></table></div>
+</section>
+<section id="models"><h2>Model Comparison</h2>
+ <p id="bestNote" class="muted"></p>
+ <div class="grid2"><div class="card"><canvas id="cmpChart"></canvas></div><div class="card"><canvas id="rocChart"></canvas></div></div>
+ <div class="card scroll"><table id="mTbl"></table></div>
+ <div class="card scroll"><h3>AI-mode models (PhiUSIIL · domain-grouped test split)</h3><table id="aiTbl"></table><p class="muted small" id="aiNote"></p></div>
+ <div class="grid3" id="cms"></div>
+ <div class="card"><h3>Decision-threshold explorer</h3><p class="muted">Drag the cut-off for calling a site phishing. Every number is recomputed from the real test set.</p>
+  <div class="row"><label>Model<select id="thModel"></select></label><label style="flex:1">Threshold <b id="thVal" class="good">0.50</b><input type="range" id="thRange" min="0" max="1" step="0.02" value="0.5"></label></div>
+  <div class="grid3" id="thStats"></div><canvas id="thChart"></canvas></div>
+ <div class="card"><h3>Feature importance (best model, permutation F1 drop)</h3><canvas id="impChart"></canvas></div>
+</section>
+<section id="predict"><h2>Website Prediction</h2>
+ <div class="toggle" id="modeTog"><i></i><button class="on" data-m="ai">AI AUTO-ANALYZE</button><button data-m="manual">MANUAL</button></div>
+ <div class="card" id="aiPanel"><h3>Paste a website URL</h3>
+  <p class="muted">AI mode reads the URL you paste, extracts domain-name features (and simple page signals if the page can be fetched), and scores them with models trained on the PhiUSIIL dataset. Features are computed by the same code for training and live scans. If the page cannot be fetched, the verdict can never clear a site as safe.</p>
+  <div class="row"><label style="flex:1">URL<input id="urlIn" placeholder="https://example.com/login"></label>
+  <label>Model <select id="aiModel"></select></label><button class="btn sm" id="aiBtn">Analyse URL</button></div>
+  <p class="muted" style="margin:6px 0">Try examples from the feature document:</p><div id="examples"></div><div id="aiStatus"></div></div>
+ <div class="card hidden" id="manualPanel"><div class="row">
+  <label>Model <select id="modelSel"></select></label>
+  <button class="btn sm" id="sampleBtn">Load real test sample</button>
+  <button class="btn sm ghost" id="resetBtn">Reset</button></div>
+  <div id="form" class="grid3 fields"></div>
+  <button class="btn" id="goBtn">Analyse Website</button></div>
+ <div id="result" class="card hidden"></div>
+ <div class="card" id="batchPanel"><h3>Batch scan</h3><p class="muted">One URL per line (max 8). Uses AI mode with the model chosen in the AI panel.</p>
+  <label>URLs<textarea id="batchIn" rows="4" placeholder="https://example.com&#10;http://125.98.3.123/login.html"></textarea></label>
+  <div class="row" style="margin-top:12px"><button class="btn sm" id="batchBtn">Scan list</button><button class="btn sm ghost hidden" id="batchDl">↓ Download CSV</button></div>
+  <div class="scroll"><table id="batchTbl"></table></div></div>
+</section>
+<section id="dashboard"><h2>Dashboard</h2>
+ <div class="grid4" id="dashCards"></div>
+ <div class="grid2"><div class="card"><h3>Prediction statistics</h3><canvas id="predChart"></canvas></div>
+  <div class="card"><h3>Recent predictions</h3><table id="histTbl"></table><br><a class="btn sm" href="/api/report">↓ Download report (CSV)</a></div></div>
+</section>
+<div id="cmdk" class="hidden"><div class="cmd"><input id="cmdIn" placeholder="Type a command…  (↑ ↓ Enter · Esc to close)"><div id="cmdList"></div></div></div>
+<footer>PhishGuard AI · MCA Project · Purvanshu Mohankar &amp; Tanmay Borkute</footer>
+<script src="/static/js/app.js"></script></body></html>
